@@ -1,12 +1,11 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
 public class Dealer {
     Scanner input = new Scanner(System.in);
-    String[] playerHand = new String[5];    
-    String[] dealerHand = new String[5]; 
+    ArrayList<String> playerHand = new ArrayList<>();    
+    ArrayList<String> dealerHand = new ArrayList<>(); 
     
     public ArrayList<String> shuffle(ArrayList<String> deck) {
         Collections.shuffle(deck);
@@ -14,64 +13,75 @@ public class Dealer {
     }
 
     public void deal(ArrayList<String> shuffledDeck) {    
-        
+    
         for (int i = 0; i < 2; i++) {
-            playerHand[i] = shuffledDeck.get(i);
-            shuffledDeck.remove(i);
+            playerHand.add(shuffledDeck.get(shuffledDeck.size() - 1));
+            shuffledDeck.remove(shuffledDeck.size() - 1);
         }
         for (int i = 0; i < 2; i++) {
-            dealerHand[i] = shuffledDeck.get(i);
-            shuffledDeck.remove(i);
+            dealerHand.add(shuffledDeck.get(shuffledDeck.size() - 1));
+            shuffledDeck.remove(shuffledDeck.size() - 1);
         }
 
-        System.out.println("Your hand is " + Arrays.toString(playerHand) + "\nTotal: " + getPlayerValue(playerHand));
-        System.out.println("Dealer hand is " + Arrays.toString(dealerHand) + "\nDealer Total: " + getDealerValue(dealerHand));
+        System.out.println("Your hand is " + playerHand + "\nTotal: " + getPlayerValue(playerHand));
+        System.out.println("Dealer hand is " + dealerHand + "\nDealer Total: " + getDealerValue(dealerHand));
     }
 
-    private int getPlayerValue(String[] playerHand) {
+    private int getPlayerValue(ArrayList<String> playerHand) {
         // This method should call Card's getPlayerValue()
         Card card = new Card();
         return card.getPlayerValue(playerHand);
     }
 
-    private int getDealerValue(String[] dealerHand) {
+    private int getDealerValue(ArrayList<String> dealerHand) {
         // This method should call Card's getDealerValue()
         Card card = new Card();
         return card.getDealerValue(dealerHand);
     }
 
-    public int playerMove(ArrayList<String> shuffledDeck) {
+    public void playerMove(ArrayList<String> shuffledDeck) {
         System.out.println("\nHit or Hold?");
         String userInput = input.nextLine();
         String move = userInput.toUpperCase();
-        
-        if (move.contains("HIT")) {
-            playerHand[2] = shuffledDeck.get(0);
-            shuffledDeck.remove(0);
+        if(getPlayerValue(playerHand) < 21) {
+            if (move.contains("HIT")) {
+            playerHand.add(shuffledDeck.get(shuffledDeck.size() - 1));
+            shuffledDeck.remove(shuffledDeck.size() - 1);
             System.out.println("New Total: " + getPlayerValue(playerHand));
-            
-            FindWinner();
+            dealerMove(shuffledDeck);
+            if(getPlayerValue(playerHand) < 21) {
+                playerMove(shuffledDeck);
+            } else {
+                 System.out.println("Your score is over 21. You Lose!");
+                System.exit(0);
+            }
             playerMove(shuffledDeck);
-        } else if (move.contains("HOLD")) {
-            System.out.println("Final Total: " + getPlayerValue(playerHand));
-            FindWinner();
+            } else if (move.contains("HOLD")) {
+                dealerMove(shuffledDeck);
+                FindWinner();
+            }
+        } else {
+            System.out.println("Your score is over 21. You Lose!");
+            System.exit(0);
         }
-        return getPlayerValue(playerHand);
     }
 
-    public int dealerMove(ArrayList<String> shuffledDeck) {
-        if(getDealerValue(dealerHand) < 14) {
-            dealerHand[2] = shuffledDeck.get(0);
-            shuffledDeck.remove(0);
+    public void dealerMove(ArrayList<String> shuffledDeck) {
+        if(getDealerValue(dealerHand) < 21){
+            if(getDealerValue(dealerHand) < 14) {
+            dealerHand.add(shuffledDeck.get(shuffledDeck.size()));
+            shuffledDeck.remove(shuffledDeck.size() - 1);
             System.out.println("The Dealer draws. New Dealer Total: " + getDealerValue(dealerHand));
             FindWinner();
-            return getDealerValue(dealerHand);
-        } else {
-            System.out.println("Final Dealer Total: " + getDealerValue(dealerHand));
+            } else {
             FindWinner();
-            return getDealerValue(dealerHand);
+            }
+        } else {
+            System.out.println("Dealer score is over 21. You Win!");
+            System.exit(0);
         }
     }
+        
 
     public boolean FindWinner(){
         if(getPlayerValue(playerHand) > getDealerValue(dealerHand) && getPlayerValue(playerHand) < 22) {

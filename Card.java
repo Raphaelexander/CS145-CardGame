@@ -26,29 +26,29 @@ public class Card {
         return deck;
     }
 
-    public int getPlayerValue(String[] playerHand) {
+    public int getPlayerValue(ArrayList<String> playerHand) {
         playerTotal = 0;
-        for (int i = 0; i < playerHand.length; i++) {
-            if (playerHand[i] != null) {
-                if (playerHand[i].contains("TWO")) {
+        for (int i = 0; i < playerHand.size(); i++) {
+            if (playerHand.get(i) != null) {
+                if (playerHand.get(i).contains("TWO")) {
                     playerTotal += 2;
-                } else if (playerHand[i].contains("THREE")) {
+                } else if (playerHand.get(i).contains("THREE")) {
                     playerTotal += 3; 
-                } else if (playerHand[i].contains("FOUR")) {
+                } else if (playerHand.get(i).contains("FOUR")) {
                     playerTotal += 4;
-                } else if (playerHand[i].contains("FIVE")) {
+                } else if (playerHand.get(i).contains("FIVE")) {
                     playerTotal += 5;
-                } else if (playerHand[i].contains("SIX")) {
+                } else if (playerHand.get(i).contains("SIX")) {
                     playerTotal += 6;
-                } else if (playerHand[i].contains("SEVEN")) {
+                } else if (playerHand.get(i).contains("SEVEN")) {
                     playerTotal += 7;
-                } else if (playerHand[i].contains("EIGHT")) {
+                } else if (playerHand.get(i).contains("EIGHT")) {
                     playerTotal += 8;
-                } else if (playerHand[i].contains("NINE")) {
+                } else if (playerHand.get(i).contains("NINE")) {
                     playerTotal += 9;
-                } else if (playerHand[i].contains("JACK") || playerHand[i].contains("QUEEN") || playerHand[i].contains("KING")) {
+                } else if (playerHand.get(i).contains("TEN") || playerHand.get(i).contains("JACK") || playerHand.get(i).contains("QUEEN") || playerHand.get(i).contains("KING")) {
                     playerTotal += 10;
-                } else if (playerHand[i].contains("ACE")) {
+                } else if (playerHand.get(i).contains("ACE")) {
                     System.out.println("You got an Ace. Is it equal 1 or 11?");
                     int ace = input.nextInt();
                     playerTotal += ace; 
@@ -58,29 +58,29 @@ public class Card {
         return playerTotal;    
     }
 
-    public int getDealerValue(String[] dealerHand) {
+    public int getDealerValue(ArrayList<String> dealerHand) {
         dealerTotal = 0;
-        for (int i = 0; i < dealerHand.length; i++) {
-            if (dealerHand[i] != null) {
-                if (dealerHand[i].contains("TWO")) {
+        for (int i = 0; i < dealerHand.size(); i++) {
+            if (dealerHand.get(i) != null) {
+                if (dealerHand.get(i).contains("TWO")) {
                     dealerTotal += 2;
-                } else if (dealerHand[i].contains("THREE")) {
+                } else if (dealerHand.get(i).contains("THREE")) {
                     dealerTotal += 3; 
-                } else if (dealerHand[i].contains("FOUR")) {
+                } else if (dealerHand.get(i).contains("FOUR")) {
                     dealerTotal += 4;
-                } else if (dealerHand[i].contains("FIVE")) {
+                } else if (dealerHand.get(i).contains("FIVE")) {
                     dealerTotal += 5;
-                } else if (dealerHand[i].contains("SIX")) {
+                } else if (dealerHand.get(i).contains("SIX")) {
                     dealerTotal += 6;
-                } else if (dealerHand[i].contains("SEVEN")) {
+                } else if (dealerHand.get(i).contains("SEVEN")) {
                     dealerTotal += 7;
-                } else if (dealerHand[i].contains("EIGHT")) {
+                } else if (dealerHand.get(i).contains("EIGHT")) {
                     dealerTotal += 8;
-                } else if (dealerHand[i].contains("NINE")) {
+                } else if (dealerHand.get(i).contains("NINE")) {
                     dealerTotal += 9;
-                } else if (dealerHand[i].contains("JACK") || dealerHand[i].contains("QUEEN") || dealerHand[i].contains("KING")) {
+                } else if (dealerHand.get(i).contains("TEN") ||dealerHand.get(i).contains("JACK") || dealerHand.get(i).contains("QUEEN") || dealerHand.get(i).contains("KING")) {
                     dealerTotal += 10;
-                } else if (dealerHand[i].contains("ACE")) {
+                } else if (dealerHand.get(i).contains("ACE")) {
                     double dealersChoice = Math.random() * 100;
                     if (dealersChoice < 50) {
                         dealerTotal += 1;
@@ -109,6 +109,7 @@ public class Card {
         SEVEN,
         EIGHT,
         NINE,
+        TEN,
         JACK,
         QUEEN,
         KING,
