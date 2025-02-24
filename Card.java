@@ -28,6 +28,7 @@ public class Card {
 
     public int getPlayerValue(ArrayList<String> playerHand) {
         playerTotal = 0;
+        int aceCount = 0;
         for (int i = 0; i < playerHand.size(); i++) {
             if (playerHand.get(i) != null) {
                 if (playerHand.get(i).contains("TWO")) {
@@ -49,11 +50,14 @@ public class Card {
                 } else if (playerHand.get(i).contains("TEN") || playerHand.get(i).contains("JACK") || playerHand.get(i).contains("QUEEN") || playerHand.get(i).contains("KING")) {
                     playerTotal += 10;
                 } else if (playerHand.get(i).contains("ACE")) {
-                    System.out.println("You got an Ace. Is it equal 1 or 11?");
-                    int ace = input.nextInt();
-                    playerTotal += ace; 
+                    aceCount++;
+                    playerTotal += 11;
                 }
             }
+        }
+        while (playerTotal > 21 && aceCount > 0) {
+            playerTotal -= 10;
+            aceCount--;
         }
         return playerTotal;    
     }

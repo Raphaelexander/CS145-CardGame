@@ -43,16 +43,16 @@ public class Dealer {
         System.out.println("\nHit or Hold?");
         String userInput = input.nextLine();
         String move = userInput.toUpperCase();
-        if(getPlayerValue(playerHand) < 21) {
+        if(getPlayerValue(playerHand) < 22) {
             if (move.contains("HIT")) {
             playerHand.add(shuffledDeck.get(shuffledDeck.size() - 1));
             shuffledDeck.remove(shuffledDeck.size() - 1);
             System.out.println("New Total: " + getPlayerValue(playerHand));
             dealerMove(shuffledDeck);
-            if(getPlayerValue(playerHand) < 21) {
+            if (getPlayerValue(playerHand) < 22) {
                 playerMove(shuffledDeck);
             } else {
-                 System.out.println("Your score is over 21. You Lose!");
+                System.out.println("Your score is over 21. You Lose!");
                 System.exit(0);
             }
             playerMove(shuffledDeck);
@@ -69,7 +69,7 @@ public class Dealer {
     public void dealerMove(ArrayList<String> shuffledDeck) {
         if(getDealerValue(dealerHand) < 21){
             if(getDealerValue(dealerHand) < 14) {
-            dealerHand.add(shuffledDeck.get(shuffledDeck.size()));
+            dealerHand.add(shuffledDeck.get(shuffledDeck.size() - 1));
             shuffledDeck.remove(shuffledDeck.size() - 1);
             System.out.println("The Dealer draws. New Dealer Total: " + getDealerValue(dealerHand));
             FindWinner();
