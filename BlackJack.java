@@ -5,19 +5,14 @@ public class BlackJack {
         Card card = new Card();
         Dealer house = new Dealer();
 
-        ArrayList<String> deck = card.newDeck();
+        ArrayList<String> deck = card.newDeck(); //initilize deck
 
-        ArrayList<String> shuffledDeck = house.shuffle(deck);
+        ArrayList<String> shuffledDeck = house.shuffle(deck); //take deck and shuffle it
 
-        house.deal(shuffledDeck);
-        house.playerMove(shuffledDeck);
-        house.dealerMove(shuffledDeck);
-        house.FindWinner();
-        
-        if(house.FindWinner() == false) {
-            System.exit(0);
-        } else {
-            System.exit(0);
-        }
+        house.deal(shuffledDeck); //deal to players
+        house.playerMove(shuffledDeck); //initilize first player move
+        house.dealerMove(shuffledDeck); //intilize first dealer move. May not be needed?
+        house.FindWinner(); //determine final winner. May not be needed?
+        System.exit(0);
     }
 }

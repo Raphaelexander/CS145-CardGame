@@ -1,36 +1,35 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Card {
     private ArrayList<String> deck;
     private int playerTotal;
     private int dealerTotal;
-    Scanner input = new Scanner(System.in);
 
-    public void setDeck(ArrayList<String> deck) {
+    public void setDeck(ArrayList<String> deck) { //setter method
         this.deck = deck;
     }
 
-    public ArrayList<String> getDeck() {
+    public ArrayList<String> getDeck() {//getter method
         return deck;
     }
 
-    public ArrayList<String> newDeck() {
+    public ArrayList<String> newDeck() {//create deck of cards
         deck = new ArrayList<>();
-        for (Suit s : Suit.values()) {
-            for (Rank r : Rank.values()) {
-                deck.add(r + " of " + s);
+        for (Suit s : Suit.values()) { // iterate over all suits in enum
+            for (Rank r : Rank.values()) { // iterate over all ranks in enum
+                deck.add(r + " of " + s); //create arraylist of strings
             }
         }
 
         return deck;
     }
 
-    public int getPlayerValue(ArrayList<String> playerHand) {
+    public int getPlayerValue(ArrayList<String> playerHand) { //method for finding value of user's hand
         playerTotal = 0;
         int aceCount = 0;
-        for (int i = 0; i < playerHand.size(); i++) {
-            if (playerHand.get(i) != null) {
+        for (int i = 0; i < playerHand.size(); i++) { 
+            if (playerHand.get(i) != null) { //if player hand is not empty
                 if (playerHand.get(i).contains("TWO")) {
                     playerTotal += 2;
                 } else if (playerHand.get(i).contains("THREE")) {
@@ -51,18 +50,18 @@ public class Card {
                     playerTotal += 10;
                 } else if (playerHand.get(i).contains("ACE")) {
                     aceCount++;
-                    playerTotal += 11;
+                    playerTotal += 11; //automatically choose 11 for player if ace is drawn
                 }
             }
         }
-        while (playerTotal > 21 && aceCount > 0) {
+        while (playerTotal > 21 && aceCount > 0) {//loop to change ace value to 1 if user's score goes over 21 with an ace in their hand
             playerTotal -= 10;
             aceCount--;
         }
         return playerTotal;    
     }
 
-    public int getDealerValue(ArrayList<String> dealerHand) {
+    public int getDealerValue(ArrayList<String> dealerHand) { //method to get value of dealer hand, same logic as playerhandvalue except for aces
         dealerTotal = 0;
         for (int i = 0; i < dealerHand.size(); i++) {
             if (dealerHand.get(i) != null) {
@@ -84,7 +83,7 @@ public class Card {
                     dealerTotal += 9;
                 } else if (dealerHand.get(i).contains("TEN") ||dealerHand.get(i).contains("JACK") || dealerHand.get(i).contains("QUEEN") || dealerHand.get(i).contains("KING")) {
                     dealerTotal += 10;
-                } else if (dealerHand.get(i).contains("ACE")) {
+                } else if (dealerHand.get(i).contains("ACE")) { //logic that uses math.random method to randomly determine if the dealer decides if ace is worth 1 or 11
                     double dealersChoice = Math.random() * 100;
                     if (dealersChoice < 50) {
                         dealerTotal += 1;
