@@ -11,8 +11,8 @@ public class BlackJack {
 
         house.deal(shuffledDeck); //deal to players
         house.playerMove(shuffledDeck); //initilize first player move
-        house.dealerMove(shuffledDeck); //intilize first dealer move. May not be needed?
-        house.FindWinner(); //determine final winner. May not be needed?
+        house.dealerMove(shuffledDeck); //intilize first dealer move
+        house.findWinner(); //determine final winner
         System.exit(0);
     }
 }
